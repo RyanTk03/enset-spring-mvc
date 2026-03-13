@@ -87,6 +87,12 @@
 			<version>5.3.8</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<version>4.0.0</version>
+		</dependency>
     </dependencies>
 
     <build>
