@@ -23,31 +23,31 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@GetMapping("/index")
+	@GetMapping("/user/index")
 	public String index(Model model) {
 		List<Product> products = productRepository.findAll();
 		model.addAttribute("products", products);
 		return "products";
 	}
 
-	@GetMapping("/")
+	@GetMapping("/user")
 	public String home() {
-		return "redirect:/index";
+		return "redirect:/user/index";
 	}
 
-	@GetMapping("/delete")
+	@GetMapping("/admin/delete")
 	public String delete(Long id) {
 		productRepository.deleteById(id);
-		return "redirect:/index";
+		return "redirect:/user/index";
 	}
 
-	@GetMapping("/new-product")
+	@GetMapping("/admin/new-product")
 	public String newProduct(Model model) {
 		model.addAttribute("product", new Product());
 		return "new-product";
 	}
 
-	@PostMapping("/save-product")
+	@PostMapping("/admin/save-product")
 	public String saveProduct(@Valid Product product, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "new-product";
@@ -55,6 +55,6 @@ public class ProductController {
 
 		productRepository.save(product);
 
-		return "redirect:index";
+		return "redirect:/user/index";
 	}
 }

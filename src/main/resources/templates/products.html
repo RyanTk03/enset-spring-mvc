@@ -12,7 +12,7 @@
 	<body>
 		<div class="p-6" layout:fragment="content">
 			<div class="p-3">
-				<a class="btn btn-primary" th:href="@{new-product}">New product</a>
+				<a class="btn btn-primary" th:href="@{/admin/new-product}">New product</a>
 			</div>
 			<table class="table">
 				<thead>
@@ -25,7 +25,7 @@
 						<td th:text="${p.price}"></td>
 						<td th:text="${p.quantity}"></td>
 						<td th>
-							<a class="btn btn-danger" th:href="@{/delete(id=${p.id})}" onClick="return confirm('Etes vous sur de vouloir supprimer ?')">
+							<a class="btn btn-danger" th:href="@{/admin/delete(id=${p.id})}" onClick="return confirm('Etes vous sur de vouloir supprimer ?')">
 								Supprimer
 							</a>
 						</td>
