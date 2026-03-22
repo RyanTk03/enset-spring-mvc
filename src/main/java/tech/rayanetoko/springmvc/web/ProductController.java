@@ -1,6 +1,7 @@
 package tech.rayanetoko.springmvc.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/user/index")
+	@PreAuthorize("hasRole('USER')")
 	public String index(Model model) {
 		List<Product> products = productRepository.findAll();
 		model.addAttribute("products", products);
@@ -42,18 +44,21 @@ public class ProductController {
 	}
 
 	@PostMapping("/admin/delete")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String delete(Long id) {
 		productRepository.deleteById(id);
 		return "redirect:/user/index";
 	}
 
 	@GetMapping("/admin/new-product")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String newProduct(Model model) {
 		model.addAttribute("product", new Product());
 		return "new-product";
 	}
 
 	@PostMapping("/admin/save-product")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String saveProduct(@Valid Product product, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "new-product";
