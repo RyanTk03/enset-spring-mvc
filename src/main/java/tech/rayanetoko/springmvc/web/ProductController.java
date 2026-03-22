@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -23,6 +24,11 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@GetMapping("/")
+	public String getRoot() {
+		return "redirect:/user/index";
+	}
+
 	@GetMapping("/user/index")
 	public String index(Model model) {
 		List<Product> products = productRepository.findAll();
@@ -35,7 +41,7 @@ public class ProductController {
 		return "redirect:/user/index";
 	}
 
-	@GetMapping("/admin/delete")
+	@PostMapping("/admin/delete")
 	public String delete(Long id) {
 		productRepository.deleteById(id);
 		return "redirect:/user/index";
@@ -56,5 +62,21 @@ public class ProductController {
 		productRepository.save(product);
 
 		return "redirect:/user/index";
+	}
+
+	@GetMapping("/not-authorized")
+	public String notAuthorized() {
+		return "not-authorized";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@PostMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login";
 	}
 }
